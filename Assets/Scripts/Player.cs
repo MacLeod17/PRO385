@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+        GetComponent<PlayerInput>().onActionTriggered += HandleAction;
     }
 
     void Update()
@@ -20,13 +20,31 @@ public class Player : MonoBehaviour
         transform.Translate(input * speed * Time.deltaTime);
     }
 
-    void OnFire()
+    public void OnFire()
     {
         Instantiate(shot, transform.position, Quaternion.identity);
     }
 
-    void OnMove(InputValue inputValue)
+    public void OnMove(InputValue inputValue)
     {
         input = inputValue.Get<Vector2>();
+    }
+
+    public void OnMove(InputAction.CallbackContext context) 
+    { 
+        input = context.ReadValue<Vector2>(); 
+    }
+
+    private void HandleAction(InputAction.CallbackContext context) 
+    { 
+        switch(context.action.name)
+        {
+            case "Fire":
+                OnFire();
+                break;
+            case "Move":
+                OnMove(context);
+                break;
+        }
     }
 }
