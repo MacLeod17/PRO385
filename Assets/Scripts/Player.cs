@@ -20,22 +20,22 @@ public class Player : MonoBehaviour
         transform.Translate(input * speed * Time.deltaTime);
     }
 
-    public void OnFire()
+    void OnFire()
     {
         Instantiate(shot, transform.position, Quaternion.identity);
     }
 
-    public void OnMove(InputValue inputValue)
+    void OnMove(InputValue inputValue)
     {
         input = inputValue.Get<Vector2>();
     }
 
-    public void OnMove(InputAction.CallbackContext context) 
+    void OnMove(InputAction.CallbackContext context) 
     { 
         input = context.ReadValue<Vector2>(); 
     }
 
-    private void HandleAction(InputAction.CallbackContext context) 
+    public void HandleAction(InputAction.CallbackContext context) 
     { 
         switch(context.action.name)
         {
