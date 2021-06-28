@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -16,19 +17,16 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        input.x = Input.GetAxis("Horizontal");
-        input.y = Input.GetAxis("Vertical");
-
         transform.Translate(input * speed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            OnFire();
-        }
     }
 
     void OnFire()
     {
         Instantiate(shot, transform.position, Quaternion.identity);
+    }
+
+    void OnMove(InputValue inputValue)
+    {
+        input = inputValue.Get<Vector2>();
     }
 }
