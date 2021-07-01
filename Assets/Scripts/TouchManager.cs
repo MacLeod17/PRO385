@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class TouchManager : MonoBehaviour
 {
     public delegate void touchDelegate(Vector2 position);
@@ -27,11 +28,11 @@ public class TouchManager : MonoBehaviour
             return instance;
         }
     }
+
     public Vector2 position { get => touchControls.Touch.TouchPosition.ReadValue<Vector2>(); }
 
     private void Awake()
     {
-        instance = this;
         touchControls = new TouchControls();
     }
 
@@ -46,7 +47,6 @@ public class TouchManager : MonoBehaviour
     }
     void Start()
     {
-        instance = this;
         touchControls.Touch.TouchPress.started += context => TouchPressStart(context);
         touchControls.Touch.TouchPress.canceled += context => TouchPressStop(context);
     }
@@ -61,14 +61,14 @@ public class TouchManager : MonoBehaviour
 
     void TouchPressStart(InputAction.CallbackContext context)
     {
-        //Debug.Log("Start" + position);
+        Debug.Log("Start" + position);
         touchStartEvent?.Invoke(position);
         touched = true;
     }
 
     void TouchPressStop(InputAction.CallbackContext context)
     {
-        //Debug.Log("Stop" + position);
+        Debug.Log("Stop" + position);
         touchStopEvent?.Invoke(position);
         touched = false;
     }
